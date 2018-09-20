@@ -48,7 +48,11 @@ if (!process.env.SPOTIFY_CLIENT_ID || !process.env.SPOTIFY_CLIENT_SECRET) {
         User.findOrCreate({
           where: { spotifyId: profile.id },
           defaults: {
-            email: '123@main.com'
+            name: profile.displayName,
+            spotifyId: profile.id,
+            accessToken: accessToken,
+            proPic: profile.photos[0],
+            refreshToken: refreshToken
           }
           // transaction: {
           //   function(err, user) {
@@ -56,7 +60,10 @@ if (!process.env.SPOTIFY_CLIENT_ID || !process.env.SPOTIFY_CLIENT_SECRET) {
           //   }
           // }
         })
-          .then((err, user) => done(err, user))
+          .spread(function (user) {
+            console.log('MAKING USER:', user)
+            done(null, user)
+          })
           .catch(done)
       }
     )
