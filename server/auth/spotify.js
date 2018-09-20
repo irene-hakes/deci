@@ -45,20 +45,17 @@ if (!process.env.SPOTIFY_CLIENT_ID || !process.env.SPOTIFY_CLIENT_SECRET) {
         callbackURL: spotifyConfig.callbackURL
       },
       function (accessToken, refreshToken, expires_in, profile, done) {
+        console.log(profile)
         User.findOrCreate({
           where: { spotifyId: profile.id },
           defaults: {
+            email: profile.emails[0].value,
             name: profile.displayName,
             spotifyId: profile.id,
             accessToken: accessToken,
             proPic: profile.photos[0],
             refreshToken: refreshToken
           }
-          // transaction: {
-          //   function(err, user) {
-          //     return done(err, user)
-          //   }
-          // }
         })
           .spread(function (user) {
             console.log('MAKING USER:', user)
