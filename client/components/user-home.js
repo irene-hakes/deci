@@ -27,13 +27,13 @@ class UserHome extends Component {
       return (
         <div>
           <h3>Welcome, {this.props.name}</h3>
-          <div>
+          <div id="playlists-container">
             {
               playlists.map(playlist => {
                 return (
-                  <div key={playlist.id}>
-                    <div>{playlist.name}</div>
-                    <img src={playlist.images[0].url} />
+                  <div key={playlist.id} className="playlist">
+                    <div className="playlist-name">{playlist.name}</div>
+                    <img className="playlist-img" src={playlist.images[0].url} />
                   </div>
                 )
               })

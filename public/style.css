@@ -7,7 +7,7 @@ html, body{
 }
 
 body {
-  font-family: sans-serif;
+  font-family: 'Maven Pro', sans-serif;
   margin: 0;
 }
 
@@ -96,4 +96,29 @@ h1 {
 #nav-hidden {
   margin-left: 3em;
   visibility: hidden;
+}
+
+#playlists-container {
+  display: flex;
+  justify-content: space-around;
+  align-content: center;
+}
+
+.playlist {
+  width: 25%;
+  box-shadow: 5px 5px 5px grey;
+  text-align: center;
+  background-color: #eee;
+}
+
+.playlist-img {
+  /* width: 75%; */
+  width: 95%;
+  margin: 2%;
+}
+
+.playlist-name {
+  /* font-family: 'Maven Pro', sans-serif; */
+  text-align: center;
+  font-size: 20px;
 }
