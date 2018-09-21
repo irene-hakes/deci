@@ -112,13 +112,11 @@ h1 {
 }
 
 .playlist-img {
-  /* width: 75%; */
   width: 95%;
   margin: 2%;
 }
 
 .playlist-name {
-  /* font-family: 'Maven Pro', sans-serif; */
   text-align: center;
   font-size: 20px;
 }

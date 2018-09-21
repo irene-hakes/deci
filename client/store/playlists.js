@@ -9,12 +9,13 @@ const spotifyApi = new SpotifyWebApi({
 })
 
 
-
 const GET_ACCESS_TOKEN = 'GET_ACCESS_TOKEN'
 const GET_PLAYLISTS = 'GET_PLAYLISTS'
+const GET_TRACKS = 'GET_TRACKS'
 
 const gotAccessToken = (token, refreshToken) => ({ type: GET_ACCESS_TOKEN, token, refreshToken })
 const gotPlaylists = playlists => ({ type: GET_PLAYLISTS, playlists })
+const gotTracks = (tracks) => ({ type: GET_TRACKS, tracks })
 
 //------THUNKS------
 export const getAccessToken = (token, refreshToken) => dispatch => {
@@ -29,18 +30,31 @@ export const getAccessToken = (token, refreshToken) => dispatch => {
 
 export const getPlaylists = userId => async dispatch => {
   try {
-    const playlists = await spotifyApi.getUserPlaylists(userId)
-    console.log('PLAYLISTS IN THUNK', playlists)
-    dispatch(gotPlaylists(playlists.body.items))
+    const response = await spotifyApi.getUserPlaylists(userId)
+    const playlists = response.body.items
+    dispatch(gotPlaylists(playlists))
   } catch (error) {
     console.error(error)
   }
 }
 
+export const getTracks = id => async dispatch => {
+  try {
+    const response = await spotifyApi.getPlaylist(id)
+    const tracks = response.body.tracks.items
+    console.log('tracks in thunk:', tracks)
+    dispatch(gotTracks(tracks))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+//------REDUCER------
 const initialState = {
   accessToken: '',
   refreshToken: '',
   playlists: [],
+  tracks: [],
   loaded: false
 }
 
@@ -50,6 +64,8 @@ export default function (state = initialState, action) {
       return { ...state, accessToken: action.token, refreshToken: action.refreshToken }
     case GET_PLAYLISTS:
       return { ...state, playlists: [...action.playlists], loaded: true }
+    case GET_TRACKS:
+      return { ...state, tracks: [...action.tracks] }
     default:
       return state
   }
