@@ -51,6 +51,10 @@ h1 {
   font-family: 'Poiret One';
 }
 
+li {
+  list-style-type: none;
+}
+
 #header {
   font-size: 60px;
   font-family: 'Poiret One';
@@ -111,12 +115,103 @@ h1 {
   background-color: #eee;
 }
 
+.playlist:active {
+  background-color: grey;
+  position: relative;
+  top: 5px;
+  left: 5px;
+  box-shadow: 0px 0px;
+  color: white;
+}
+
+.playlist:hover {
+  color: black;
+  text-decoration: none;
+}
+
 .playlist-img {
   width: 95%;
   margin: 2%;
 }
 
+.playlist-img:hover {
+  color: black;
+}
+
 .playlist-name {
   text-align: center;
   font-size: 20px;
+  text-decoration: none;
+}
+
+.playlist-name:hover {
+  color: black;
+  text-decoration: none;
+}
+
+#playlist-header {
+  text-align: center;
+  margin: 1em;
+}
+
+#playlist-container {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+}
+
+#track-container {
+  width: 80vw;
+  align-self: center;
+  border: black;
+  border-style: solid;
+  border-width: .5px;
+  border-bottom: none;
+  background-color: #eee;
+}
+
+.track-item {
+  text-align: right;
+  display: inline-block;
+  padding-right: 1em;
+  border-right: black;
+  border-right-style: solid;
+  border-right-width: .25px;
+}
+
+.track-row {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;;
+  border-bottom: black;
+  border-bottom-style: solid;
+  border-bottom-width: .25px;
+}
+
+.play {
+  width: 5%;
+}
+
+.title {
+  width: 30%;
+}
+
+.artist {
+  width: 20%;
+}
+
+.album {
+  width: 40%;
+}
+
+.time {
+  width: 5%;
+  border-right: none;
+}
+
+.track-row:hover {
+  background-color: grey;
+  color: white;
 }

@@ -3,29 +3,49 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { getTracks, getAccessToken } from '../store/playlists'
 
+const getTime = (ms) => {
+  const minutes = Math.floor(ms / 60000)
+  const seconds = ((ms % 60000) / 1000).toFixed(0)
+  if (seconds < 10) {
+    return `${minutes}:0${seconds}`
+  } else {
+    return `${minutes}:${seconds}`
+  }
+}
+
 class Playlist extends Component {
   constructor(props) {
     super(props)
   }
 
   componentDidMount() {
-    console.log('playlist component mounted')
-    console.log('playlist id in component:', this.props.match.params.id)
+    const { accessToken, refreshToken } = this.props
+    this.props.setInitialToken(accessToken, refreshToken)
     this.props.retrieveTracks(this.props.match.params.id)
   }
 
   render() {
     const tracks = this.props.tracks
+    // const playlist = this.props.playlist
     return (
-      <div>
-        HELLO WORLD
-        {
-          tracks.map(track => {
-            return (
-              <div key={track.track.id}>{track.track.name}</div>
-            )
-          })
-        }
+      <div id="playlist-container">
+        <h3 id="playlist-header">{this.props.playlist.name}</h3>
+        <div id="track-container">
+          {
+            tracks.map(track => {
+              return (
+                <li className="track-row" key={track.track.id}>
+                  <div className="track-item play">Play</div>
+                  <div className="track-item title">{track.track.name}</div>
+                  <div className="track-item artist">{track.track.artists[0].name}</div>
+                  <div className="track-item album">{track.track.album.name}</div>
+                  <div className="track-item time">{getTime(track.track.duration_ms)}</div>
+                  <hr />
+                </li>
+              )
+            })
+          }
+        </div>
       </div>
     )
   }
@@ -33,7 +53,10 @@ class Playlist extends Component {
 
 const mapStateToProps = state => {
   return {
-    tracks: state.playlists.tracks
+    playlist: state.playlists.selectedPlaylist,
+    tracks: state.playlists.tracks,
+    accessToken: state.user.accessToken,
+    refreshToken: state.user.refreshToken
   }
 }
 

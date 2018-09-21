@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Route, Link } from 'react-router-dom'
-import { getPlaylists, getAccessToken } from '../store/playlists'
+import { getPlaylists, getAccessToken, selectPlaylist } from '../store/playlists'
 import { Playlist } from './playlist'
 
 /**
@@ -23,7 +23,6 @@ class UserHome extends Component {
   render() {
     const playlists = this.props.playlists
     const name = this.props.name ? this.props.name : this.props.spotifyId
-    console.log('playlist id:', playlists[0])
     if (this.props.loaded) {
       return (
         <div>
@@ -33,7 +32,7 @@ class UserHome extends Component {
               playlists.map(playlist => {
                 return (
                   <div key={playlist.id} className="playlist">
-                    <Link to={`/playlist/${playlist.id}`}>
+                    <Link to={`/playlist/${playlist.id}`} onClick={() => this.props.pickPlaylist(playlist)}>
                       <div className="playlist-name">{playlist.name}</div>
                       <img className="playlist-img" src={playlist.images[0].url} />
                     </Link>
@@ -71,7 +70,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     retrievePlaylists: (userId) => dispatch(getPlaylists(userId)),
-    setInitialToken: (token, refreshToken) => dispatch(getAccessToken(token, refreshToken))
+    setInitialToken: (token, refreshToken) => dispatch(getAccessToken(token, refreshToken)),
+    pickPlaylist: (playlist) => dispatch(selectPlaylist(playlist))
   }
 }
 

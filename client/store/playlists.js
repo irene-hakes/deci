@@ -11,11 +11,13 @@ const spotifyApi = new SpotifyWebApi({
 
 const GET_ACCESS_TOKEN = 'GET_ACCESS_TOKEN'
 const GET_PLAYLISTS = 'GET_PLAYLISTS'
+const SELECT_PLAYLIST = 'SELECT_PLAYLIST'
 const GET_TRACKS = 'GET_TRACKS'
 
 const gotAccessToken = (token, refreshToken) => ({ type: GET_ACCESS_TOKEN, token, refreshToken })
 const gotPlaylists = playlists => ({ type: GET_PLAYLISTS, playlists })
 const gotTracks = (tracks) => ({ type: GET_TRACKS, tracks })
+export const selectPlaylist = (selectedPlaylist) => ({ type: SELECT_PLAYLIST, selectedPlaylist })
 
 //------THUNKS------
 export const getAccessToken = (token, refreshToken) => dispatch => {
@@ -55,6 +57,7 @@ const initialState = {
   refreshToken: '',
   playlists: [],
   tracks: [],
+  selectedPlaylist: {},
   loaded: false
 }
 
@@ -66,6 +69,8 @@ export default function (state = initialState, action) {
       return { ...state, playlists: [...action.playlists], loaded: true }
     case GET_TRACKS:
       return { ...state, tracks: [...action.tracks] }
+    case SELECT_PLAYLIST:
+      return { ...state, selectedPlaylist: { ...action.selectedPlaylist } }
     default:
       return state
   }
