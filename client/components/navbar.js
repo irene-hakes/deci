@@ -1,28 +1,30 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-import {logout} from '../store'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { logout } from '../store'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
-  <div>
-    <h1>BOILERMAKER</h1>
+const Navbar = ({ handleClick, isLoggedIn }) => (
+  <div id="nav-container">
     <nav>
       {isLoggedIn ? (
-        <div>
+        <div id="nav-inner">
+          <div id="nav-hidden">Logout</div>
+          <h1 id="header">deci</h1>
           {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
+          {/* <Link to="/home">Home</Link> */}
           <a href="#" onClick={handleClick}>
             Logout
           </a>
         </div>
       ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
-          <Link to="/login">Login</Link>
-          <Link to="/signup">Sign Up</Link>
-        </div>
-      )}
+          <div id="nav-inner-login">
+            <h1 id="header">deci</h1>
+            {/* The navbar will show these links before you log in */}
+            {/* <Link to="/login">Login</Link> */}
+            {/* <Link to="/signup">Sign Up</Link> */}
+          </div>
+        )}
     </nav>
     <hr />
   </div>

@@ -46,18 +46,38 @@ if (!process.env.SPOTIFY_CLIENT_ID || !process.env.SPOTIFY_CLIENT_SECRET) {
       },
       function (accessToken, refreshToken, expires_in, profile, done) {
         console.log(profile)
-        User.findOrCreate({
-          where: { spotifyId: profile.id },
-          defaults: {
-            email: profile.emails[0].value,
-            name: profile.displayName,
-            spotifyId: profile.id,
-            accessToken: accessToken,
-            proPic: profile.photos[0],
-            refreshToken: refreshToken
-          }
-        })
-          .spread(function (user) {
+        // User.findOrCreate({
+        //   where: { spotifyId: profile.id },
+        //   defaults: {
+        //     email: profile.emails[0].value,
+        //     name: profile.displayName,
+        //     spotifyId: profile.id,
+        //     accessToken: accessToken,
+        //     proPic: profile.photos[0],
+        //     refreshToken: refreshToken
+        //   }
+        // })
+        // .spread(function (user) {
+        //   console.log('MAKING USER:', user)
+        //   done(null, user)
+        // })
+        // .catch(done)
+        User.findOne({ where: { spotifyId: profile.id } })
+          .then(function (obj) {
+            if (obj) {
+              return obj.update({ accessToken, refreshToken })
+            } else {
+              return User.create({
+                email: profile.emails[0].value,
+                name: profile.displayName,
+                spotifyId: profile.id,
+                accessToken: accessToken,
+                proPic: profile.photos[0],
+                refreshToken: refreshToken
+              })
+            }
+          })
+          .then(function (user) {
             console.log('MAKING USER:', user)
             done(null, user)
           })

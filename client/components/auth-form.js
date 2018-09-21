@@ -11,10 +11,8 @@ const AuthForm = props => {
 
   return (
     <div>
-      <h1 id="login-header">deci</h1>
       <div id="login-button-container">
-        <hr />
-        <a className="btn btn-outline-dark" href="/auth/spotify">Sign in your Spotify account to get started</a>
+        <a className="btn btn-outline-dark login-button" href="/auth/spotify">Sign in your Spotify account to get started</a>
       </div>
     </div>
     // <div>
