@@ -23,26 +23,31 @@ class UserHome extends Component {
   render() {
     const playlists = this.props.playlists
     console.log('here are my playlists', this.props.playlists)
-    return (
-      <div>
-        <h3>Welcome, {this.props.name}</h3>
-        <div>{playlists.items}</div>
-      </div>
-    )
+    if (this.props.loaded) {
+      return (
+        <div>
+          <h3>Welcome, {this.props.name}</h3>
+          <div>
+            {
+              playlists.map(playlist => {
+                return (
+                  <div key={playlist.id}>
+                    <div>{playlist.name}</div>
+                    <img src={playlist.images[0].url} />
+                  </div>
+                )
+              })
+            }
+          </div>
+        </div>
+      )
+    } else {
+      return (
+        <div>Loading...</div>
+      )
+    }
   }
 }
-
-// const UserHome = props => {
-//   const { name, accessToken, playlists, userId } = props
-//   // const test = props.retrievePlaylists(userId)
-
-//   return (
-//     <div>
-//       <h3>Welcome, {accessToken}</h3>
-//       <div>{playlists.items}</div>
-//     </div>
-//   )
-// }
 
 /**
  * CONTAINER
@@ -54,7 +59,8 @@ const mapStateToProps = state => {
     userId: state.user.spotifyId,
     accessToken: state.user.accessToken,
     refreshToken: state.user.refreshToken,
-    playlists: state.playlists.playlists
+    playlists: state.playlists.playlists,
+    loaded: state.playlists.loaded
   }
 }
 

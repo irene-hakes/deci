@@ -31,7 +31,7 @@ export const getPlaylists = userId => async dispatch => {
   try {
     const playlists = await spotifyApi.getUserPlaylists(userId)
     console.log('PLAYLISTS IN THUNK', playlists)
-    dispatch(gotPlaylists(playlists))
+    dispatch(gotPlaylists(playlists.body.items))
   } catch (error) {
     console.error(error)
   }
@@ -40,7 +40,8 @@ export const getPlaylists = userId => async dispatch => {
 const initialState = {
   accessToken: '',
   refreshToken: '',
-  playlists: {}
+  playlists: [],
+  loaded: false
 }
 
 export default function (state = initialState, action) {
@@ -48,7 +49,7 @@ export default function (state = initialState, action) {
     case GET_ACCESS_TOKEN:
       return { ...state, accessToken: action.token, refreshToken: action.refreshToken }
     case GET_PLAYLISTS:
-      return { ...state, playlists: { ...action.playlists } }
+      return { ...state, playlists: [...action.playlists], loaded: true }
     default:
       return state
   }
