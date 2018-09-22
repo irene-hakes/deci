@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 import { Navbar, FriendList } from './components'
 import Routes from './routes'
@@ -27,11 +28,19 @@ class App extends Component {
     return (
       <div>
         <Navbar handleMouseDown={this.handleMouseDown} />
-        <FriendList handleMouseDown={this.handleMouseDown} menuVisibility={this.state.visible} />
+        {
+          this.props.isLoggedIn && (
+            <FriendList handleMouseDown={this.handleMouseDown} menuVisibility={this.state.visible} />
+          )
+        }
         <Routes />
       </div>
     )
   }
 }
 
-export default App
+const mapStateToProps = state => ({
+  isLoggedIn: !!state.user.id
+})
+
+export default connect(mapStateToProps)(App)

@@ -51,7 +51,7 @@ class Playlist extends Component {
       )
     } else {
       return (
-        <div>Loading...</div>
+        <div id="playlist-header">Loading...</div>
       )
     }
   }
