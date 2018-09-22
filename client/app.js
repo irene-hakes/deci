@@ -2,10 +2,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 import { Navbar, FriendList } from './components'
+import { withRouter } from 'react-router-dom'
 import Routes from './routes'
 
 class App extends Component {
-  constructor(props, context) {
+  constructor(props) {
     super(props)
     this.state = {
       visible: false
@@ -43,4 +44,4 @@ const mapStateToProps = state => ({
   isLoggedIn: !!state.user.id
 })
 
-export default connect(mapStateToProps)(App)
+export default withRouter(connect(mapStateToProps)(App))

@@ -48,7 +48,6 @@ export const getTracks = id => async dispatch => {
   try {
     const response = await spotifyApi.getPlaylist(id)
     const tracks = response.body.tracks.items
-    console.log('tracks in thunk:', tracks)
     dispatch(gotTracks(tracks))
   } catch (error) {
     console.error(error)
@@ -60,6 +59,27 @@ export const getFriends = () => async dispatch => {
     const response = await axios.get('/api/friends')
     const friends = response.data
     dispatch(gotFriends(friends))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const getPlaylistInfo = (id) => async dispatch => {
+  try {
+    const response = await spotifyApi.getPlaylist(id)
+    const playlist = response.body
+    dispatch(selectPlaylist(playlist))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const getFriendInfo = (spotifyId) => async dispatch => {
+  try {
+    const response = await axios.get(`/api/friends/${spotifyId}`)
+    const friend = response.data
+    console.log(friend)
+    dispatch(selectFriend(friend))
   } catch (error) {
     console.error(error)
   }

@@ -11,7 +11,17 @@ router.get('/', async (req, res, next) => {
       attributes: ['name', 'spotifyId']
     })
     res.json(friends)
-  } catch (err) {
-    next(err)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get('/:id', async (req, res, next) => {
+  try {
+    const response = await Friends.findAll({ where: { spotifyId: req.params.id } })
+    const friend = response[0]
+    res.json(friend)
+  } catch (error) {
+    next(error)
   }
 })
