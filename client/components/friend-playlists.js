@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Route, Link } from 'react-router-dom'
+import { Route, Link, withRouter } from 'react-router-dom'
 import { getPlaylists, getAccessToken, selectPlaylist } from '../store/playlists'
 import { Playlist } from './playlist'
 
@@ -21,14 +21,23 @@ class FriendPlaylists extends Component {
     this.props.retrievePlaylists(spotifyId)
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.friendId !== this.props.friendId) {
+      const spotifyId = this.props.match.params.id
+      this.props.retrievePlaylists(spotifyId)
+    }
+  }
+
   render() {
-    const playlists = this.props.playlists
+    // const playlists = this.props.playlists
+    const friend = this.props.friend
     if (this.props.loaded) {
       return (
         <div>
+          <h3 id="playlist-header">{`${friend.name}'s Playlists`}</h3>
           <div id="playlists-container">
             {
-              playlists.map(playlist => {
+              this.props.playlists.map(playlist => {
                 return (
                   <div key={playlist.id} className="playlist">
                     <Link to={`/playlist/${playlist.id}`} onClick={() => this.props.pickPlaylist(playlist)}>
@@ -58,7 +67,9 @@ const mapStateToProps = state => {
     accessToken: state.user.accessToken,
     refreshToken: state.user.refreshToken,
     playlists: state.playlists.playlists,
-    loaded: state.playlists.loaded
+    loaded: state.playlists.loaded,
+    friend: state.playlists.selectedFriend,
+    friendId: state.playlists.selectedFriend.spotifyId
   }
 }
 
@@ -70,5 +81,5 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FriendPlaylists)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FriendPlaylists))
 

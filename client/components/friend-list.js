@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { getFriends, getAccessToken } from '../store/playlists'
+import { getFriends, getAccessToken, selectFriend } from '../store/playlists'
 
 class FriendList extends Component {
 
@@ -14,8 +14,10 @@ class FriendList extends Component {
   render() {
     let visibility = 'hide'
     const friends = this.props.friends
+    let open = 'close-button'
     if (this.props.menuVisibility) {
       visibility = 'show'
+      open = 'open-button'
     }
     if (this.props.loaded) {
       return (
@@ -23,12 +25,13 @@ class FriendList extends Component {
           // onMouseDown={this.props.handleMouseDown}
           className={visibility}
         >
-          <button id="close-button" className="btn btn-outline-dark" type="button" onClick={this.props.handleMouseDown}>&#9664;</button>
+          <button id={open} onClick={this.props.handleMouseDown}>&#9664;</button>
+          <h4>My Friends</h4>
           <div id="friends-container">
             {
               friends.map(friend => {
                 return (
-                  <Link to={`/user/${friend.spotifyId}`} key={friend.id}>
+                  <Link to={`/user/${friend.spotifyId}`} key={friend.id} onClick={() => this.props.pickFriend(friend)}>
                     <li className="friend" key={friend.spotifyId}>{friend.name}</li>
                   </Link>
                 )
@@ -55,6 +58,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = dispatch => ({
   retrieveFriends: () => dispatch(getFriends()),
   setInitialToken: (token, refreshToken) => dispatch(getAccessToken(token, refreshToken)),
+  pickFriend: friend => dispatch(selectFriend(friend))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(FriendList)

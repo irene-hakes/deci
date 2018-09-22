@@ -26,7 +26,6 @@ class UserHome extends Component {
     if (this.props.loaded) {
       return (
         <div>
-          <h3>Welcome, {name}</h3>
           <div id="playlists-container">
             {
               playlists.map(playlist => {

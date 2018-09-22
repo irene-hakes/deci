@@ -27,27 +27,33 @@ class Playlist extends Component {
   render() {
     const tracks = this.props.tracks
     // const playlist = this.props.playlist
-    return (
-      <div id="playlist-container">
-        <h3 id="playlist-header">{this.props.playlist.name}</h3>
-        <div id="track-container">
-          {
-            tracks.map(track => {
-              return (
-                <li className="track-row" key={track.track.id}>
-                  <div className="track-item play">Play</div>
-                  <div className="track-item title">{track.track.name}</div>
-                  <div className="track-item artist">{track.track.artists[0].name}</div>
-                  <div className="track-item album">{track.track.album.name}</div>
-                  <div className="track-item time">{getTime(track.track.duration_ms)}</div>
-                  <hr />
-                </li>
-              )
-            })
-          }
+    if (this.props.loaded) {
+      return (
+        <div id="playlist-container">
+          <h3 id="playlist-header">{this.props.playlist.name}</h3>
+          <div id="track-container">
+            {
+              tracks.map(track => {
+                return (
+                  <li className="track-row" key={track.track.id}>
+                    <div className="track-item play">Play</div>
+                    <div className="track-item title">{track.track.name}</div>
+                    <div className="track-item artist">{track.track.artists[0].name}</div>
+                    <div className="track-item album">{track.track.album.name}</div>
+                    <div className="track-item time">{getTime(track.track.duration_ms)}</div>
+                    <hr />
+                  </li>
+                )
+              })
+            }
+          </div>
         </div>
-      </div>
-    )
+      )
+    } else {
+      return (
+        <div>Loading...</div>
+      )
+    }
   }
 }
 
@@ -56,7 +62,8 @@ const mapStateToProps = state => {
     playlist: state.playlists.selectedPlaylist,
     tracks: state.playlists.tracks,
     accessToken: state.user.accessToken,
-    refreshToken: state.user.refreshToken
+    refreshToken: state.user.refreshToken,
+    loaded: state.playlists.loadedTracks
   }
 }
 

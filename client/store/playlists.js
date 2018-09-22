@@ -14,12 +14,14 @@ const GET_PLAYLISTS = 'GET_PLAYLISTS'
 const SELECT_PLAYLIST = 'SELECT_PLAYLIST'
 const GET_TRACKS = 'GET_TRACKS'
 const GET_FRIENDS = 'GET_FRIENDS'
+const SELECT_FRIEND = 'SELECT_FRIEND'
 
 const gotAccessToken = (token, refreshToken) => ({ type: GET_ACCESS_TOKEN, token, refreshToken })
 const gotPlaylists = playlists => ({ type: GET_PLAYLISTS, playlists })
 const gotTracks = (tracks) => ({ type: GET_TRACKS, tracks })
 export const selectPlaylist = (selectedPlaylist) => ({ type: SELECT_PLAYLIST, selectedPlaylist })
 const gotFriends = (friends) => ({ type: GET_FRIENDS, friends })
+export const selectFriend = (selectedFriend) => ({ type: SELECT_FRIEND, selectedFriend })
 
 //------THUNKS------
 export const getAccessToken = (token, refreshToken) => dispatch => {
@@ -71,8 +73,10 @@ const initialState = {
   tracks: [],
   selectedPlaylist: {},
   friends: [],
+  selectedFriend: {},
   loaded: false,
-  loadedFriends: false
+  loadedFriends: false,
+  loadedTracks: false
 }
 
 export default function (state = initialState, action) {
@@ -82,11 +86,13 @@ export default function (state = initialState, action) {
     case GET_PLAYLISTS:
       return { ...state, playlists: [...action.playlists], loaded: true }
     case GET_TRACKS:
-      return { ...state, tracks: [...action.tracks] }
+      return { ...state, tracks: [...action.tracks], loadedTracks: true }
     case SELECT_PLAYLIST:
       return { ...state, selectedPlaylist: { ...action.selectedPlaylist } }
     case GET_FRIENDS:
       return { ...state, friends: [...action.friends], loadedFriends: true }
+    case SELECT_FRIEND:
+      return { ...state, selectedFriend: { ...action.selectedFriend } }
     default:
       return state
   }

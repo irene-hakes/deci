@@ -10,14 +10,22 @@ const Navbar = ({ handleClick, isLoggedIn, handleMouseDown }) => (
     <nav>
       {isLoggedIn ? (
         <div id="nav-inner">
-          {/* <div id="nav-hidden">Logout</div> */}
-          <FriendButton handleMouseDown={handleMouseDown} />
+          <div>
+            <div id="nav-hidden">Logout</div>
+            <div id="nav-hidden">My Playlists</div>
+          </div>
+          {/* <FriendButton handleMouseDown={handleMouseDown} /> */}
           <h1 id="header">deci</h1>
           {/* The navbar will show these links after you log in */}
           {/* <Link to="/home">Home</Link> */}
-          <a href="#" onClick={handleClick}>
-            Logout
+          <div>
+            <a href="/home">
+              My Playlists
           </a>
+            <a href="#" onClick={handleClick}>
+              Logout
+          </a>
+          </div>
         </div>
       ) : (
           <div id="nav-inner-login">
