@@ -229,21 +229,22 @@ li {
   overflow: scroll;
   z-index: 1000;
   width: 25vw;
-  height: 100vh;
+  /* height: 100vh; */
   box-shadow: 5px 5px 5px grey;
   display: flex;
   flex-direction: column;
   /* justify-content: center; */
   align-items: center;
   /* align-content: center; */
+  padding-bottom: 30px;
 }
 
 #friend-list.hide {
-  transform: translate3d(-23.5vw, 0, 0);
+  transform: translate3d(-23.5vw, 90px, 0);
 }
 
 #friend-list.show {
-  transform: translate3d(0vw, 0, 0);
+  transform: translate3d(0vw, 90px, 0);
   overflow: hidden;
 }
 
