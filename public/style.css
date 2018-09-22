@@ -9,6 +9,7 @@ html, body{
 body {
   font-family: 'Maven Pro', sans-serif;
   margin: 0;
+  overflow: auto;
 }
 
 a {
@@ -214,4 +215,33 @@ li {
 .track-row:hover {
   background-color: grey;
   color: white;
+}
+
+#friend-list {
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: #eee;
+  transform: translate .3s
+    cubic-bezier(0, .52, 0, 1);
+  overflow: scroll;
+  z-index: 1000;
+  width: 25vw;
+  height: 100vh;
+  border-right: black;
+  border-right-style: solid;
+  border-right-width: .25px;
+}
+
+#friend-list.hide {
+  transform: translate3d(-100vw, 0, 0);
+}
+
+#friend-list.show {
+  transform: translate3d(0vw, 0, 0);
+  overflow: hidden;
+}
+
+#friend-button {
+  margin-left: 3em;
 }

@@ -3,13 +3,15 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { logout } from '../store'
+import FriendButton from './friend-button'
 
-const Navbar = ({ handleClick, isLoggedIn }) => (
+const Navbar = ({ handleClick, isLoggedIn, handleMouseDown }) => (
   <div id="nav-container">
     <nav>
       {isLoggedIn ? (
         <div id="nav-inner">
-          <div id="nav-hidden">Logout</div>
+          {/* <div id="nav-hidden">Logout</div> */}
+          <FriendButton handleMouseDown={handleMouseDown} />
           <h1 id="header">deci</h1>
           {/* The navbar will show these links after you log in */}
           {/* <Link to="/home">Home</Link> */}
