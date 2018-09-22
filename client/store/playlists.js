@@ -13,11 +13,13 @@ const GET_ACCESS_TOKEN = 'GET_ACCESS_TOKEN'
 const GET_PLAYLISTS = 'GET_PLAYLISTS'
 const SELECT_PLAYLIST = 'SELECT_PLAYLIST'
 const GET_TRACKS = 'GET_TRACKS'
+const GET_FRIENDS = 'GET_FRIENDS'
 
 const gotAccessToken = (token, refreshToken) => ({ type: GET_ACCESS_TOKEN, token, refreshToken })
 const gotPlaylists = playlists => ({ type: GET_PLAYLISTS, playlists })
 const gotTracks = (tracks) => ({ type: GET_TRACKS, tracks })
 export const selectPlaylist = (selectedPlaylist) => ({ type: SELECT_PLAYLIST, selectedPlaylist })
+const gotFriends = (friends) => ({ type: GET_FRIENDS, friends })
 
 //------THUNKS------
 export const getAccessToken = (token, refreshToken) => dispatch => {
@@ -51,6 +53,16 @@ export const getTracks = id => async dispatch => {
   }
 }
 
+export const getFriends = () => async dispatch => {
+  try {
+    const response = await axios.get('/api/friends')
+    const friends = response.data
+    dispatch(gotFriends(friends))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 //------REDUCER------
 const initialState = {
   accessToken: '',
@@ -58,7 +70,9 @@ const initialState = {
   playlists: [],
   tracks: [],
   selectedPlaylist: {},
-  loaded: false
+  friends: [],
+  loaded: false,
+  loadedFriends: false
 }
 
 export default function (state = initialState, action) {
@@ -71,6 +85,8 @@ export default function (state = initialState, action) {
       return { ...state, tracks: [...action.tracks] }
     case SELECT_PLAYLIST:
       return { ...state, selectedPlaylist: { ...action.selectedPlaylist } }
+    case GET_FRIENDS:
+      return { ...state, friends: [...action.friends], loadedFriends: true }
     default:
       return state
   }

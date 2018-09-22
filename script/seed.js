@@ -1,18 +1,30 @@
 'use strict'
 
 const db = require('../server/db')
-const {User} = require('../server/db/models')
+const { User, Friends } = require('../server/db/models')
 
 async function seed() {
-  await db.sync({force: true})
+  await db.sync({ force: true })
   console.log('db synced!')
 
   const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
+    User.create({ email: 'cody@email.com', password: '123' }),
+    User.create({ email: 'murphy@email.com', password: '123' })
   ])
 
-  console.log(`seeded ${users.length} users`)
+  const friends = await Promise.all([
+    Friends.create({ name: 'Irene Barber', spotifyId: 'irenecbarber' }),
+    Friends.create({ name: 'Abby Benvenutti', spotifyId: '1216220815' }),
+    Friends.create({ name: 'Natalia Dittren', spotifyId: 'dtrainspots' }),
+    Friends.create({ name: 'Taylor Hakes', spotifyId: 'taylorhakes' }),
+    Friends.create({ name: 'Stacey Harfenist', spotifyId: 'stacy.harfenist' }),
+    Friends.create({ name: 'Kristin Harper', spotifyId: 'az9ewqbhd4vs1rbp06fovq306' }),
+    Friends.create({ name: 'Funmi Ojo', spotifyId: 'diosmeda' }),
+    Friends.create({ name: 'Ji Min Park', spotifyId: 'parkjimin0' }),
+    Friends.create({ name: 'Asya Slutskaya', spotifyId: 'asyasl' }),
+  ])
+
+  console.log(`seeded ${users.length} users & ${friends.length} friends`)
   console.log(`seeded successfully`)
 }
 

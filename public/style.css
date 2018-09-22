@@ -107,13 +107,15 @@ li {
   display: flex;
   justify-content: space-around;
   align-content: center;
+  flex-wrap: wrap;
 }
 
 .playlist {
-  width: 25%;
+  width: 22%;
   box-shadow: 5px 5px 5px grey;
   text-align: center;
   background-color: #eee;
+  margin: 2%;
 }
 
 .playlist:active {
@@ -228,9 +230,12 @@ li {
   z-index: 1000;
   width: 25vw;
   height: 100vh;
-  border-right: black;
-  border-right-style: solid;
-  border-right-width: .25px;
+  box-shadow: 5px 5px 5px grey;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  /* align-content: center; */
 }
 
 #friend-list.hide {
@@ -244,4 +249,37 @@ li {
 
 #friend-button {
   margin-left: 3em;
+}
+
+#friends-container {
+  width: 80%;
+  align-self: center;
+  text-align: center;
+  margin-top: 30px;
+  border-top: black;
+  border-top-style: solid;
+  border-top-width: .25px;
+}
+
+.friend {
+  border-bottom: black;
+  border-bottom-style: solid;
+  border-bottom-width: .25px;
+  text-align: center;
+  width: 20vw;
+  height: 30px;
+}
+
+.friend:hover {
+  background-color: grey;
+  color: white;
+}
+
+#close-button {
+  font-size: 12px;
+  text-align: right;
+  border-style: none;
+  width: 2.25rem;
+  text-align: left;
+  align-self: flex-end;
 }
