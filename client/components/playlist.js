@@ -20,7 +20,8 @@ class Playlist extends Component {
     this.state = {
       selectedTrack: '',
       isPlaying: false,
-      isPaused: false
+      isPaused: false,
+      symbol: 'play_arrow'
     }
     this.selectTrack = this.selectTrack.bind(this)
     this.start = this.start.bind(this)
@@ -84,7 +85,8 @@ class Playlist extends Component {
     console.log('starting song!')
     this.setState({
       isPlaying: true,
-      isPaused: false
+      isPaused: false,
+      symbol: 'pause'
     })
     const play = ({
       spotify_uri,
@@ -179,6 +181,7 @@ class Playlist extends Component {
   render() {
     const tracks = this.props.tracks
     const name = this.props.playlist.name
+    const symbol = this.state.isPaused ? 'play_arrow' : 'pause'
     if (this.props.loaded) {
       return (
         <div id="tracks-page">
@@ -191,7 +194,7 @@ class Playlist extends Component {
                     track.track.id === this.state.selectedTrack
                       ? (
                         <li id="track-selected" className="track-row" key={track.track.id} onClick={() => this.selectTrack(track.track.id)}>
-                          <div className="track-item play">Play</div>
+                          <div className="track-item play material-icons">{symbol}</div>
                           <div className="track-item title">{track.track.name}</div>
                           <div className="track-item artist">{track.track.artists[0].name}</div>
                           <div className="track-item album">{track.track.album.name}</div>
@@ -201,7 +204,7 @@ class Playlist extends Component {
                       )
                       : (
                         <li className="track-row" key={track.track.id} onClick={() => this.selectTrack(track.track.id)}>
-                          <div className="track-item play">Play</div>
+                          <div className="track-item play material-icons">play_arrow</div>
                           <div className="track-item title">{track.track.name}</div>
                           <div className="track-item artist">{track.track.artists[0].name}</div>
                           <div className="track-item album">{track.track.album.name}</div>
