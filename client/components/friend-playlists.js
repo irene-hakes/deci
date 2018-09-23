@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Route, Link, withRouter } from 'react-router-dom'
-import { getPlaylists, getAccessToken, selectPlaylist, getFriendInfo } from '../store/playlists'
+import { getPlaylists, getAccessToken, selectPlaylist, getFriendInfo, getCurrentPlaylist } from '../store/playlists'
 import { Playlist } from './playlist'
 
 /**
@@ -20,6 +20,7 @@ class FriendPlaylists extends Component {
     this.props.setInitialToken(accessToken, refreshToken)
     this.props.retrievePlaylists(spotifyId)
     this.props.pickFriend(spotifyId)
+    this.props.fetchCurrentPlaylist(spotifyId)
   }
 
   componentDidUpdate(prevProps) {
@@ -79,7 +80,8 @@ const mapDispatchToProps = dispatch => {
     retrievePlaylists: (userId) => dispatch(getPlaylists(userId)),
     setInitialToken: (token, refreshToken) => dispatch(getAccessToken(token, refreshToken)),
     pickPlaylist: (playlist) => dispatch(selectPlaylist(playlist)),
-    pickFriend: (id) => dispatch(getFriendInfo(id))
+    pickFriend: (id) => dispatch(getFriendInfo(id)),
+    fetchCurrentPlaylist: (id) => dispatch(getCurrentPlaylist(id))
   }
 }
 

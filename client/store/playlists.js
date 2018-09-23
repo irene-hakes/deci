@@ -15,6 +15,7 @@ const SELECT_PLAYLIST = 'SELECT_PLAYLIST'
 const GET_TRACKS = 'GET_TRACKS'
 const GET_FRIENDS = 'GET_FRIENDS'
 const SELECT_FRIEND = 'SELECT_FRIEND'
+const CURRENT_PLAYLIST = 'CURRENT_PLAYLIST'
 
 const gotAccessToken = (token, refreshToken) => ({ type: GET_ACCESS_TOKEN, token, refreshToken })
 const gotPlaylists = playlists => ({ type: GET_PLAYLISTS, playlists })
@@ -22,6 +23,7 @@ const gotTracks = (tracks) => ({ type: GET_TRACKS, tracks })
 export const selectPlaylist = (selectedPlaylist) => ({ type: SELECT_PLAYLIST, selectedPlaylist })
 const gotFriends = (friends) => ({ type: GET_FRIENDS, friends })
 export const selectFriend = (selectedFriend) => ({ type: SELECT_FRIEND, selectedFriend })
+const gotCurrentPlaylist = (playlistId) => ({ type: CURRENT_PLAYLIST, playlistId })
 
 //------THUNKS------
 export const getAccessToken = (token, refreshToken) => dispatch => {
@@ -78,8 +80,17 @@ export const getFriendInfo = (spotifyId) => async dispatch => {
   try {
     const response = await axios.get(`/api/friends/${spotifyId}`)
     const friend = response.data
-    console.log(friend)
     dispatch(selectFriend(friend))
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const getCurrentPlaylist = (spotifyId) => async dispatch => {
+  try {
+    const response = await spotifyApi.getUser(spotifyId)
+    console.log('getting user', response)
+    dispatch(gotCurrentPlaylist(response))
   } catch (error) {
     console.error(error)
   }

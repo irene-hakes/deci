@@ -103,6 +103,10 @@ li {
   visibility: hidden;
 }
 
+#nav-hidden-div {
+  margin-left: 5em;
+}
+
 #playlists-container {
   display: flex;
   justify-content: space-around;
@@ -191,6 +195,10 @@ li {
   border-bottom: black;
   border-bottom-style: solid;
   border-bottom-width: .25px;
+}
+
+#track-selected {
+  background-color: orange;
 }
 
 .play {
@@ -316,3 +324,55 @@ li {
   color: white;
   background-color: grey;
 }
+
+#tracks-page {
+  display: flex;
+  flex-direction: column;
+}
+
+#player-container {
+  position: fixed;
+  height: 100px;
+  width: 50%;
+  bottom: 5px;
+  text-align: center;
+  align-self: center;
+}
+
+#player-controls {
+  background-color: none;
+  box-shadow: 5px -5px 5px grey;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+}
+
+#back-button {
+  height: 50px;
+}
+
+#play-pause {
+  height: 75px;
+}
+
+#forward-button {
+  height: 50px;
+}
+
+/* #player-controls > div {
+  height: 100%;
+  align-items: center;
+} */
+
+
+/* i.fa {
+  cursor: pointer;
+  font-size: 2em;
+  transition: color 0.2s ease;
+}
+
+i.fa:hover {
+  color: #00aa00;
+} */

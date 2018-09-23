@@ -105,7 +105,8 @@ if (!process.env.SPOTIFY_CLIENT_ID || !process.env.SPOTIFY_CLIENT_SECRET) {
   //   .use(cookieParser());
 
   router.get('/', passport.authenticate('spotify', {
-    scope: ['user-read-email', 'user-read-private']
+    // scope: ['user-read-email', 'user-read-private']
+    scope: ["streaming", "user-read-birthdate", "user-read-email", "user-read-private"]
   }), function (req, res) {
     // The request will be redirected to spotify for authentication, so this
     // function will not be called.

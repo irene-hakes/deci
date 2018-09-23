@@ -31,7 +31,10 @@ class FriendList extends Component {
             {
               friends.map(friend => {
                 return (
-                  <Link to={`/user/${friend.spotifyId}`} key={friend.id} onClick={() => this.props.pickFriend(friend)}>
+                  <Link to={`/user/${friend.spotifyId}`} key={friend.spotifyId} onClick={() => {
+                    this.props.pickFriend(friend)
+                    this.props.handleMouseDown()
+                  }}>
                     <li className="friend" key={friend.spotifyId}>{friend.name}</li>
                   </Link>
                 )
